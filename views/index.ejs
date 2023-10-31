@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>To Do List</title>
+    <link href="styles/main.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <%- include("components/navibar.ejs") %>
+
+    <div
+      class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center"
+    >
+      <div class="list-group">
+        <% locals.toDoList.forEach((item, index) => { %>
+        <div class="list-group-item d-flex gap-3">
+          <input
+            class="form-check-input flex-shrink-0"
+            type="checkbox"
+            value=""
+            style="font-size: 1.375em"
+          />
+          <span class="pt-1 to-do-item">
+            <strong><%=item %></strong>
+            <small class="d-block text-body-secondary" contentEditable>
+              <svg class="bi me-1" width="1em" height="1em">
+                <use xlink:href="#calendar-event"></use>
+              </svg>
+              <%= locals.time[index] %>
+            </small>
+          </span>
+
+          <button
+            type="button"
+            class="btn-close btn-sm ml-auto remove-button"
+            aria-label="Close"
+            data-index="<%=index %>"
+          ></button>
+        </div>
+        <% }) %>
+
+        <form action="/submit" method="POST">
+          <input type="text" id="to-do" name="newItem" required />
+          <input class="btn-primary" type="submit" value="Submit" />
+        </form>
+      </div>
+    </div>
+
+    <%- include("components/footer.ejs") %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="helper.js" charset="utf-8"></script>
+  </body>
+</html>
